@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Navigate,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import ChangePass from "./component/changepass/changepass";
 import ForgotPass from "./component/forgotpass/forgotpass";
@@ -19,18 +14,15 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Routes>
-          <AppContext.Provider value={[log, setLog]}>
+        <AppContext.Provider value={[log, setLog]}>
+          <Routes>
             <Route path="/protected" element={<Protected />} />
-            <Route path="/login" element={<Login />} />
-            <Route exact path="/forgotpassword" element={<ForgotPass />} />
-            <Route exact path="/register" element={<Register />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/forgotpassword" element={<ForgotPass />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/resetpassword/:id/:token" element={<ChangePass />} />
-            <Route exact path="/">
-              <Navigate to="/login" />
-            </Route>
-          </AppContext.Provider>
-        </Routes>
+          </Routes>
+        </AppContext.Provider>
       </Router>
     </div>
   );

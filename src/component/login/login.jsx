@@ -45,7 +45,7 @@ function Login() {
 
   return (
     <>
-      <div className="bg-primary p-3 card-container">
+      <div className="bg-warning p-3 card-container">
         <Card className="card" border="secondary">
           <Card.Header className="text-center">
             <h4 className="text-dark">Login</h4>
@@ -59,17 +59,17 @@ function Login() {
               validationSchema={signInSchema}
               onSubmit={async (values) => {
                 console.log(values);
-                let reset = await sendLogin(values); //if status 200 returns true; else false
+                let isAccess = await sendLogin(values); //if status 200 returns true; else false
 
-                console.log(reset); //true or
+                console.log(isAccess); //true or
 
-                if (reset) {
+                if (isAccess) {
                   console.log(log); //default false;
                   setLog(true); //now true
                   navigate("/protected");
                 } else {
                   console.log("else in");
-                  navigate("/protected");
+                  navigate("/register");
                 }
               }}
             >
