@@ -1,15 +1,17 @@
-import React, { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import axios from "axios";
 import * as YUP from "yup";
 import { NavLink } from "react-router-dom";
 import "./register.css";
-function register() {
+
+function Register() {
   const [info, setInfo] = useState("");
+
   const createAccount = async (values) => {
     try {
-      console.log("acc created");
+      console.log("acc created ");
       const response = await axios.post(
         "https://reset-password-nodejs.herokuapp.com/users/register",
         {
@@ -20,20 +22,23 @@ function register() {
       );
       console.log(response);
       setInfo(response.data);
+
       return true;
     } catch (err) {
       console.log(err.response.data);
-      setInfo(err.response.data);
+      setInfo(err.response.data.Error);
       return false;
     }
   };
+
   const signInSchema = YUP.object().shape({
-    name: YUP.string().required("please enter name"),
-    email: YUP.string().email().required("please enter your email"),
+    name: YUP.string().required("Please enter name"),
+    email: YUP.string().email().required("Please Enter Your Email"),
     password: YUP.string()
-      .min(6, "password should be greater than 5 charecter")
+      .min(6, "password should be greather than 5 characters")
       .required("Enter your password"),
   });
+
   return (
     <>
       <div className="bg-primary card-container">
@@ -52,6 +57,7 @@ function register() {
               onSubmit={(values, { resetForm }) => {
                 console.log(values);
                 createAccount(values);
+
                 resetForm();
               }}
             >
@@ -63,7 +69,7 @@ function register() {
                         Name
                       </label>
                       <Field
-                        className="form-control-link"
+                        className="form-control link"
                         id="name"
                         type="text"
                         name="name"
@@ -73,41 +79,40 @@ function register() {
                         <ErrorMessage name="name" />
                       </div>
                     </div>
+
+                    {/* email */}
                     <div className="form-group mb-3">
-                      <label className="text-start" htmlFor="email">
-                        Email
-                      </label>
+                      <label htmlFor="email">Email</label>
                       <Field
-                        className="form-control-link"
+                        className="form-control link"
                         id="email"
                         type="email"
                         name="email"
                         component="input"
                       />
                       <div className="error">
-                        <ErrorMessage name="name" />
+                        <ErrorMessage name="email" />
                       </div>
                     </div>
+                    {/* password */}
                     <div className="form-group mb-3">
-                      <label className="text-start" htmlFor="email">
-                        Password
-                      </label>
+                      <label htmlFor="password">Password</label>
                       <Field
-                        className="form-control-link"
-                        id="password"
-                        type="password"
-                        name="password"
+                        className="form-control link"
                         component="input"
+                        type="password"
+                        id="password"
+                        name="password"
                       />
                       <div className="error">
-                        <ErrorMessage name="name" />
+                        <ErrorMessage name="password" />
                       </div>
                     </div>
                     <div className="d-flex justify-content-center">
                       <Button type="submit" variant="success">
                         Create
                       </Button>
-                      <Button className="mx-2" variant="success">
+                      <Button className="mx-2 " variant="success">
                         <NavLink className="loginLink" to="/login">
                           Login
                         </NavLink>
@@ -127,4 +132,4 @@ function register() {
   );
 }
 
-export default register;
+export default Register;
